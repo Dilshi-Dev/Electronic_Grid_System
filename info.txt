@@ -1,2 +1,4 @@
 first we are going to create a project folder with proper structure with db connection code. then only we can do our codes indivually and team leader also can easily merge without any difficulties.
-hi try pull
+1.main dashboard 
+2.user login
+
