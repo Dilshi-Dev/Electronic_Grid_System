@@ -1,136 +1,82 @@
-package controllers;
+package models;
 
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+public class Inquiry {
 
-import org.jsoup.Jsoup;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import models.Help;
-import utils.Queries;
-
-@Path("/InquiryRequest")
-public class HelpController {
-
-	Queries query = new Queries();
+	
+	private Integer cusID;
+	private String Name;
+	private String NIC;
+	private Integer Home_ele_no  ;
+	private String Address;
+	private String Email;
+	private Integer contact;
+	private String message;
+	private String Inquirtype;
+	private String Inquirystatus;
 	
 	
-	@GET
-	@Path("/")
-	@Produces(MediaType.TEXT_HTML)
-	public String getAllInquiry()
-	{
-		//List<ConRequest> requests = new ArrayList<>();
-		String requests =  this.query.getAll();
-		return requests;
-		
+	public Integer getcusID() {
+		return cusID;
+	}
+	public void setcusID(Integer cusID) {
+		this.cusID = cusID;
+	}
+	public String geName() {
+		return Name;
+	}
+	public void setName(String Name) {
+		this.Name = Name;
+	}
+	public String getNIC() {
+		return NIC;
+	}
+	public void setNIC(String NIC) {
+		this.NIC = NIC;
+	}
+	public Integer getHome_ele_no() {
+		return Home_ele_no;
+	}
+	public void setHome_ele_no(Integer Home_ele_no) {
+		this.Home_ele_no = Home_ele_no;
+	}
+	public String getAddress() {
+		return Address;
+	}
+	public void setAddress(String Address) {
+		this.Address = Address;
+	}
+	public String getEmail() {
+		return Email;
+	}
+	public void setEmail(String Email) {
+		this.Email = Email;
+	}
+	public Integer getContact() {
+		return contact;
+	}
+	public void setContact(Integer contact) {
+		this.contact = contact;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
-	@GET
-	@Path("/{cusID}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_HTML)
-	public String singleHelp(@PathParam("cusID")int cusID)
-	{
-		
-		return this.query.getOne(cusID);
-	
+	public String getInquiryStatus() {
+		return Inquirystatus;
+	}
+	public void setInquiryStatus(String Inquirystatus) {
+		this.Inquirystatus = Inquirystatus;
 	}
 	
-	@POST
-	@Path("/Add")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)	
-	//@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addInquiry(
-			@FormParam("cusID") Integer cusID,
-			@FormParam("Name") String Name,
-			@FormParam("NIC") String NIC,
-			@FormParam("Home_ele_no") Integer Home_ele_no  ,
-			@FormParam("Address") String Address,
-			@FormParam("email") String email,
-			@FormParam("contact") Integer contact,
-			@FormParam("message") String message,
-			@FormParam("inquirtype") String inquirtype,
-			@FormParam("inquirystatus") String inquirystatus,	
-	)
-	{
-		
-		Inquiry request = new Inquiry();
-		
-		request.setcusID(cusID);
-		request.seName(Name);
-		request.setNIC(NIC);
-		request.setHome_ele_no(Home_ele_no );
-		request.setAddress(Address);
-		request.setEmail(Email);
-		request.setContact(contact);
-		request.setMessage(Message);
-		request.setInquirtype(inquirtype);
-		request.setInquirystatus(inquirystatus);
-		
-		String output = this.query.Insert(request);
-		
-		return output;
-		
+	public String getInquiryType() {
+		return Inquirytype;
 	}
-	
-	
-	@PUT
-	@Path("/Update")
-	//@Consumes(MediaType.APPLICATION_JSON)	
-	@Consumes(MediaType.APPLICATION_JSON)
-	//@Produces(MediaType.TEXT_PLAIN)
-	public String UpdateInquiry(String Data)
-	{
-		
-		JsonObject Object = new JsonParser().parse(Data).getAsJsonObject();
-		
-		Integer cusID = Object.get("cudID").getAsInt();
-		String Name = Object.get("Name").getAsString();
-		String NIC = Object.get("NIC").getAsString();
-		Integer Home_ele_no = Object.get("Home_ele_nor").getAsInt();
-		String Address = Object.get("Address").getAsString();
-		String Email = Object.get("Email").getAsString();
-		Integer contact = Object.get("contact").getAsInt();
-		String message = Object.get("message").getAsString();
-		String inquirtype = Object.get("inquirtype").getAsString();
-		String inquirystatus = Object.get("inquirystatus").getAsString();
-
-		
-		String output = this.query.Update(cusID,Name,NIC,Home_ele_no,Address,Email,contact,message,inquirtype,inquirystatus);
-		
-		return output;
-		
+	public void setInquiryType(String Inquirytype) {
+		this.Inquirytype = Inquirytype;
 	}
-	
-	
-	@DELETE
-	@Path("/Delete")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteInquiry(String Data)
-	{
-
-		org.jsoup.nodes.Document doc = Jsoup.parse(Data, "", org.jsoup.parser.Parser.xmlParser());
-		String id = doc.select("cusID").text();
-		String output = query.delete(Integer.parseInt(cusID));
-		
-		return output;
-	}
-	
-	
-	
 	
 	
 }
